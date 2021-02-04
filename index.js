@@ -22,15 +22,13 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
   const menuCollection = client.db(`${process.env.DB_NAME}`).collection("menuItems");
 
-  app.post("/data", (req, res) => {
-      const data = req.body;
-      menuCollection.insertMany(data)
-      .then(result => {
-          if(result.insertedCount > 0) {
-              res.send(result)
-          }
+  app.get('/menu-list', (req, res) => {
+      menuCollection.find({})
+      .toArray((err, menu) => {
+          res.send(menu)
       })
   })
+  
   
 });
 
