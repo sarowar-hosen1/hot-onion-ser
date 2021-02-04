@@ -22,12 +22,37 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
   const menuCollection = client.db(`${process.env.DB_NAME}`).collection("menuItems");
 
+  //all menu
   app.get('/menu-list', (req, res) => {
       menuCollection.find({})
       .toArray((err, menu) => {
           res.send(menu)
       })
   })
+
+  //breakfast
+  app.get('/menu-breakfast', (req, res) => {
+      menuCollection.find({category:"breakfast"})
+      .toArray((err, breakfast) => {
+          res.send(breakfast)
+      })
+  })
+
+  //lunch
+  app.get('/menu-lunch', (req, res) => {
+    menuCollection.find({category:"lunch"})
+    .toArray((err, breakfast) => {
+        res.send(breakfast)
+    })
+})
+
+//dinner
+app.get('/menu-dinner', (req, res) => {
+    menuCollection.find({category:"dinner"})
+    .toArray((err, breakfast) => {
+        res.send(breakfast)
+    })
+})
   
   
 });
