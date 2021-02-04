@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const ObjectId = require('mongodb').ObjectId;
 require('dotenv').config();
 
 //runing port number
@@ -53,7 +54,14 @@ app.get('/menu-dinner', (req, res) => {
         res.send(breakfast)
     })
 })
-  
+
+//menu details
+app.get('/menu/:id', (req, res) => {
+    menuCollection.find({_id:ObjectId(req.params.id)})
+    .toArray((err, documents) => {
+        res.send(documents[0])
+    })
+})
   
 });
 
